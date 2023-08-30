@@ -88,7 +88,7 @@ namespace SpriteExample
             spriteBatch.Draw(atlas, new Vector2(50, 50), new Rectangle(96, 16, 16, 16), Color.White);
             foreach (var bat in bats) bat.Draw(gameTime, spriteBatch);
             slimeGhost.Draw(gameTime, spriteBatch);
-            spriteBatch.DrawString(bangers, $"{gameTime:c}", new Vector2(2,2), Color.Gold);
+            spriteBatch.DrawString(bangers, $"{gameTime.TotalGameTime.ToString():c}", new Vector2(2,2), Color.Gold);
             spriteBatch.End();
 
             base.Draw(gameTime);
