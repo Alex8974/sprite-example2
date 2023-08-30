@@ -13,6 +13,8 @@ namespace SpriteExample
         private SpriteBatch spriteBatch;
 
         private SlimeGhostSprite slimeGhost;
+        private Texture2D atlas;
+        private BatSprite[] bats;
 
         /// <summary>
         /// Constructs the game
@@ -31,6 +33,12 @@ namespace SpriteExample
         {
             // TODO: Add your initialization logic here
             slimeGhost = new SlimeGhostSprite();
+            bats = new BatSprite[]
+            {
+                new BatSprite(){ Position = new Vector2(100, 100), Direction = Direction.Down},
+                new BatSprite(){ Position = new Vector2(400, 400), Direction = Direction.Up},
+                new BatSprite(){ Position = new Vector2(200, 500), Direction = Direction.Left}
+            };
 
             base.Initialize();
         }
@@ -44,6 +52,8 @@ namespace SpriteExample
 
             // TODO: use this.Content to load your game content here
             slimeGhost.LoadContent(Content);
+            atlas = Content.Load<Texture2D>("colored_packed");
+            foreach (var bat in bats) bat.LoadContent(Content);
         }
 
         /// <summary>
@@ -57,6 +67,7 @@ namespace SpriteExample
 
             // TODO: Add your update logic here
             slimeGhost.Update(gameTime);
+            foreach (var bat in bats) bat.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -70,7 +81,10 @@ namespace SpriteExample
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.BackToFront);
+            
+            spriteBatch.Draw(atlas, new Vector2(50, 50), new Rectangle(96, 16, 16, 16), Color.White);
+            foreach (var bat in bats) bat.Draw(gameTime, spriteBatch);
             slimeGhost.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 
